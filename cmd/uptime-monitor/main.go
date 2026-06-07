@@ -17,8 +17,9 @@ func main() {
 	}
 
 	s := scheduler.Scheduler{
-		Targets:  targets,
-		Interval: 30 * time.Second,
+		Targets:     targets,
+		Interval:    30 * time.Second,
+		WorkerCount: 3,
 	}
 
 	s.Run()

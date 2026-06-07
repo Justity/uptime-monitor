@@ -8,35 +8,52 @@ import (
 	"github.com/Justity/uptime-monitor/internal/checker"
 )
 
-type Scheduler struct {
-	Targets  []checker.Target
-	Interval time.Duration
-}
-
 func (s *Scheduler) Run() {
 
 	for {
 
+		jobs := make(chan checker.Target)
+
+		results := make(chan checker.CheckResult)
+
 		var wg sync.WaitGroup
 
-		fmt.Println("---------------")
-		
-		for _, target := range s.Targets {
+		for i := 0; i < s.WorkerCount; i++ {
 
 			wg.Add(1)
 
-			go func(target checker.Target) {
-
-				defer wg.Done()
-
-				result := checker.CheckTarget(target)
-				fmt.Println(result)
-
-			}(target)
+			go worker(
+				jobs,
+				results,
+				&wg,
+			)
 		}
 
-		wg.Wait()
+		go func() {
 
-		time.Sleep(s.Interval)
+			for _, target := range s.Targets {
+
+				jobs <- target
+			}
+
+			close(jobs)
+
+		}()
+
+		go func() {
+
+			wg.Wait()
+
+			close(results)
+
+		}()
+
+		for result := range results {
+			fmt.Println(result)
+		}
+
+		time.Sleep(
+			s.Interval,
+		)
 	}
 }
