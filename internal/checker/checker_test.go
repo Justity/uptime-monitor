@@ -24,7 +24,12 @@ func TestCheck_ReturnsSuccessForHealthyServer(
 
 	defer server.Close()
 
-	result := Check(server.URL)
+	target := Target{
+		Name: "Google",
+		URL:  "https://google.com",
+	}
+
+	result := CheckTarget(target)
 
 	if !result.IsUp {
 		t.Fatal(
