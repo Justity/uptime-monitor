@@ -1,6 +1,7 @@
 package scheduler
 
 import (
+	"fmt"
 	"sync"
 	"time"
 
@@ -18,6 +19,8 @@ func (s *Scheduler) Run() {
 
 		var wg sync.WaitGroup
 
+		fmt.Println("---------------")
+		
 		for _, target := range s.Targets {
 
 			wg.Add(1)
@@ -27,8 +30,7 @@ func (s *Scheduler) Run() {
 				defer wg.Done()
 
 				result := checker.CheckTarget(target)
-
-				result.Print()
+				fmt.Println(result)
 
 			}(target)
 		}
