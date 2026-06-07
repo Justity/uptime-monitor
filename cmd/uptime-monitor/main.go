@@ -8,18 +8,32 @@ import (
 
 func main() {
 
-	target := checker.Target{
-		Name: "Google",
-		URL:  "https://google.com",
+	targets := []checker.Target{
+		{
+			Name: "Google",
+			URL:  "https://google.com",
+		},
+		{
+			Name: "GitHub",
+			URL:  "https://github.com",
+		},
+		{
+			Name: "Go",
+			URL:  "https://go.dev",
+		},
 	}
 
-	result := checker.CheckTarget(
-		target,
-	)
+	for _, target := range targets {
+		result := checker.CheckTarget(target)
 
-	fmt.Println("---------------")
-	fmt.Println(target.Name)
-	fmt.Println("Available:", result.IsUp)
-	fmt.Println("Status:", result.StatusCode)
-	fmt.Println("Response:", result.ResponseTime)
+		fmt.Println("---------------")
+		fmt.Printf(
+			"%s | %v | %d | %v | %v\n",
+			target.Name,
+			result.IsUp,
+			result.StatusCode,
+			result.ResponseTime,
+			result.Error,
+		)
+	}
 }

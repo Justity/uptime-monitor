@@ -15,7 +15,8 @@ func CheckTarget(
 
 	if err != nil {
 		return Result{
-			IsUp: false,
+			IsUp:  false,
+			Error: err,
 		}
 	}
 
