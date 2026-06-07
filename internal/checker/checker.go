@@ -7,23 +7,25 @@ import (
 
 func CheckTarget(
 	target Target,
-) Result {
+) CheckResult {
 
 	start := time.Now()
 
 	resp, err := http.Get(target.URL)
 
 	if err != nil {
-		return Result{
-			IsUp:  false,
-			Error: err,
+		return CheckResult{
+			Target: target,
+			IsUp:   false,
+			Error:  err,
 		}
 	}
 
 	defer resp.Body.Close()
 
-	return Result{
-		IsUp:         resp.StatusCode >= 200 && resp.StatusCode < 400,
+	return CheckResult{
+		Target:       target,
+		IsUp:         true,
 		StatusCode:   resp.StatusCode,
 		ResponseTime: time.Since(start),
 	}
