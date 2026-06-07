@@ -1,8 +1,10 @@
 package main
 
 import (
-	"github.com/Justity/uptime-monitor/internal/checker"
+	"time"
+
 	"github.com/Justity/uptime-monitor/internal/config"
+	"github.com/Justity/uptime-monitor/internal/scheduler"
 )
 
 func main() {
@@ -14,8 +16,10 @@ func main() {
 		panic(err)
 	}
 
-	for _, target := range targets {
-		result := checker.CheckTarget(target)
-		result.Print()
+	s := scheduler.Scheduler{
+		Targets:  targets,
+		Interval: 30 * time.Second,
 	}
+
+	s.Run()
 }
