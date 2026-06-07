@@ -7,10 +7,18 @@ import (
 )
 
 func main() {
-	result := checker.Check(
-		"https://google.com",
+
+	target := checker.Target{
+		Name: "Google",
+		URL:  "https://google.com",
+	}
+
+	result := checker.CheckTarget(
+		target,
 	)
 
+	fmt.Println("---------------")
+	fmt.Println(target.Name)
 	fmt.Println("Available:", result.IsUp)
 	fmt.Println("Status:", result.StatusCode)
 	fmt.Println("Response:", result.ResponseTime)

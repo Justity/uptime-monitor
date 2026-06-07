@@ -5,16 +5,13 @@ import (
 	"time"
 )
 
-type Result struct {
-	IsUp         bool
-	StatusCode   int
-	ResponseTime time.Duration
-}
+func CheckTarget(
+	target Target,
+) Result {
 
-func Check(url string) Result {
 	start := time.Now()
 
-	resp, err := http.Get(url)
+	resp, err := http.Get(target.URL)
 
 	if err != nil {
 		return Result{
