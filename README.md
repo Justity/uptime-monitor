@@ -27,8 +27,8 @@ Uptime Guard is a self-hosted monitoring service written in Go.
 
 * [x] HTTP health checks
 * [ ] PostgreSQL integration
-* [ ] Scheduler
-* [ ] Worker pool
+* [x] Scheduler
+* [x] Worker pool
 * [ ] Telegram notifications
 * [ ] SSL monitoring
 * [ ] Prometheus metrics
