@@ -1,7 +1,6 @@
 package scheduler
 
 import (
-	"fmt"
 	"sync"
 	"time"
 
@@ -49,9 +48,10 @@ func (s *Scheduler) Run() {
 		}()
 
 		for result := range results {
-			fmt.Println(result)
+			s.ProcessResult(
+				result,
+			)
 		}
-
 		time.Sleep(
 			s.Interval,
 		)
